@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+edca_env/
+myenv/
+wandb_env/
+.venv/
+venv/
+wandb/
+logs/
+test_logs/
+*.backup
+*.before_*
+*.broken
+*.save
+comet_token.json
+.env

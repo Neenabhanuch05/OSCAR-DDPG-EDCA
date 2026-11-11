@@ -1,0 +1,22 @@
+OSCAR + EDCA extension
+
+1. Controller
+   OSCAR's original DDPG controller is retained.
+   The DDPG output is scaled to CWcomp in [0, 896].
+
+2. EDCA parameters
+   AC_VO: AIFSN 2, CWmin 7, CWmax 15 + CWcomp, TXOP 1.504 ms
+   AC_VI: AIFSN 2, CWmin 15 + CWcomp, CWmax 31 + CWcomp, TXOP 3.008 ms
+   AC_BE: AIFSN 3, CWmin 31 + CWcomp, CWmax 1023, TXOP 0
+   AC_BK: AIFSN 7, CWmin 31 + CWcomp, CWmax 1023, TXOP 0
+
+3. Traffic classification
+   Station i mod 4 == 0: ToS 0xE0 -> AC_VO
+   Station i mod 4 == 1: ToS 0xA0 -> AC_VI
+   Station i mod 4 == 2: ToS 0x60 -> AC_BE
+   Station i mod 4 == 3: ToS 0x40 -> AC_BK
+
+4. Files changed from base OSCAR
+   cw.cc       EDCA queue configuration + DDPG action -> CWcomp
+   scenario.h traffic classification into four ACs
+   OSCAR_train.py DDPG action scaling changed to CWcomp [0,896]
